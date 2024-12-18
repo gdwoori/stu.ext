@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서울신학대학교 내선번호</title>
+    <style>
+        /* 색상 코드 관리 */
+        :root {
+            --background-color: #ffffff; /* 검정색 */
+            --text-color: #ffffff; /* 흰색 */
+            --input-background: #1a1a1a; /* 어두운 회색 */
+            --input-text-color: #ffffff; /* 흰색 */
+            --border-color: #444444; /* 회색 테두리 */
+            --highlight-color: 000000; /* 강조 색 (오렌지) #0688cf */
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;background-image: url('100pic.jpg'); /* 배경 이미지 */
+	background-size: cover; /* 화면 크기에 맞게 조정 */
+	background-position: center; /* 이미지의 중심을 화면 중앙에 맞춤 */
+	background-repeat: no-repeat; /* 이미지 반복 제거 */
+        }
+
+        .container {
+            max-width: 19.5rem;
+            width: 90%; /* 화면 너비에 따라 유동적으로 변경 */
+	background-color: rgba(0, 0, 0, 0.6); /* 반투명 검정 배경 */
+    	border-radius: 10px; /* 모서리를 둥글게 */
+    	padding: 1rem; /* 내부 여백 추가 */
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--highlight-color); /* 강조 색상 */
+	opacity: 95%;
+        }
+
+	.subtitle {
+	    font-size: 0.8rem; /* 작은 글씨 크기 */
+	    color: var(--text-color); /* 연한 색상 */
+		opacity: 90%;
+	    margin-top: -0.5rem; /* 제목과의 간격 조정 */
+	    margin-bottom: 1rem; /* 입력 필드와의 간격 조정 */
+	}
+
+        input {
+            padding: 0.5rem;
+            width: 90%;
+            font-size: 1rem;
+            background-color: var(--input-background);
+            color: var(--input-text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        input::placeholder {
+            color: var(--border-color);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 0; /* 초기 상태에서 숨기기 */
+            overflow: hidden; /* 넘치는 내용 숨기기 */
+            transition: max-height 0.3s ease; /* 부드러운 높이 전환 */
+            border: 1px solid var(--border-color); /* 테두리 */
+            border-radius: 5px;
+            text-align: left; /* 텍스트 정렬 왼쪽으로 */
+            margin-top: 1rem; /* 상단 마진 추가 */
+    	background-color: var(--input-background); /* 리스트 배경색 */
+    	border-radius: 5px; /* 리스트의 모서리 둥글게 */
+        }
+
+        li {
+            margin: 0.5rem;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            word-wrap: break-word;
+            text-align: left; /* 텍스트 정렬 왼쪽으로 */
+        }
+
+        .no-results {
+            color: var(--highlight-color);
+            font-weight: bold;
+            text-align: center; /* 결과 없음 메시지 가운데 정렬 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>서울신학대학교 내선번호</h1>
+	<p class="subtitle">2022년 3월 17일 기준</p>
+        <input type="text" id="searchBox" placeholder="부서명이나 전화번호를 입력하세요...">
+        <ul id="results"></ul>
+    </div>
+
+    <script>
+        // 예제 데이터 (num으로 변경)
+        const data = [
+            { id: 1, name: "이사장실", num: "100" },
+            { id: 2, name: "사무국", num: "101" },
+            { id: 3, name: "사무국", num: "102" },
+            { id: 4, name: "후원회", num: "104" },
+            { id: 5, name: "총장비서실과장", num: "204" },
+            { id: 6, name: "총장비서실", num: "202" },
+            { id: 7, name: "부총장실", num: "701" },
+	{ id: 8, name: "대외협력실", num: "570" },
+	{ id: 9, name: "홍보", num: "571" },
+	{ id: 9, name: "홍보", num: "576" },
+	{ id: 10, name: "모금", num: "107" },
+	{ id: 11, name: "기부문의", num: "572" },
+	{ id: 12, name: "기부문의", num: "573" },
+	{ id: 13, name: "기부문의", num: "575" },
+	{ id: 14, name: "교목처장", num: "230" },
+	{ id: 15, name: "교목과장", num: "231" },
+	{ id: 16, name: "교목처사무실", num: "232" },
+	{ id: 17, name: "생활관장", num: "241" },
+	{ id: 18, name: "부관장-남자", num: "241" },
+	{ id: 19, name: "부관장-여자", num: "238" },
+	{ id: 20, name: "생활관사무실", num: "242" },
+	{ id: 21, name: "English Floor 강사", num: "239" },
+	{ id: 22, name: "교무처장", num: "210" },
+	{ id: 23, name: "교무과장", num: "233" },
+	{ id: 24, name: "교무", num: "207" },
+	{ id: 25, name: "수업", num: "212" },
+	{ id: 26, name: "연구", num: "213" },
+	{ id: 27, name: "학적/증명", num: "214" },
+	{ id: 28, name: "교원인사", num: "215" },
+	{ id: 29, name: "학사지원과", num: "152" },
+	{ id: 30, name: "인문사회계열", num: "153" },
+	{ id: 31, name: "신학과", num: "142" },
+	{ id: 32, name: "사회복지학과", num: "144" },
+	{ id: 33, name: "아동보육학과", num: "146" },
+	{ id: 34, name: "기독교교육과", num: "143" },
+	{ id: 35, name: "유아교육과", num: "148" },
+	{ id: 36, name: "IT융합소프트웨어학과", num: "138" },
+	{ id: 37, name: "인문/교양/관광", num: "154" },
+	{ id: 38, name: "관광경영학과", num: "147" },
+	{ id: 39, name: "글로벌경영학과", num: "145" },
+	{ id: 40, name: "중국언어문화콘텐츠학과", num: "149" },
+	{ id: 41, name: "일본어문화콘텐츠학과", num: "140" },
+	{ id: 42, name: "교양학부", num: "139" },
+	{ id: 43, name: "예술계열", num: "255" },
+	{ id: 44, name: "교회음악과", num: "256" },
+	{ id: 45, name: "실용음악과", num: "257" },
+	{ id: 46, name: "기획처장", num: "105" },
+	{ id: 47, name: "기획과장", num: "106" },
+	{ id: 48, name: "예산", num: "108" },
+	{ id: 49, name: "규정/출판", num: "109" },
+	{ id: 50, name: "평가지원", num: "413" },
+	{ id: 51, name: "통계", num: "412" },
+	{ id: 52, name: "전산실장", num: "439" },
+	{ id: 53, name: "전산과", num: "209" },
+	{ id: 54, name: "전산과", num: "259" },
+	{ id: 55, name: "전산과", num: "272" },
+	{ id: 56, name: "PC클리닉", num: "258" },
+	{ id: 57, name: "학생처장", num: "293" },
+	{ id: 58, name: "학생과장", num: "217" },
+	{ id: 59, name: "학생과", num: "218" },
+	{ id: 60, name: "장학", num: "298" },
+	{ id: 62, name: "국가장학", num: "234" },
+	{ id: 63, name: "장학콜센터", num: "235" },
+	{ id: 64, name: "학생서비스센터", num: "185" },
+	{ id: 65, name: "학생서비스센터", num: "187" },
+	{ id: 66, name: "장애학생지원센터", num: "186" },
+	{ id: 67, name: "입학처장", num: "411" },
+	{ id: 68, name: "입학과장", num: "410" },
+	{ id: 69, name: "입학담당", num: "406" },
+	{ id: 70, name: "입학사정관실", num: "405" },
+	{ id: 71, name: "입학상담", num: "407" },
+	{ id: 72, name: "입학상담", num: "408" },
+	{ id: 73, name: "입학상담", num: "409" },
+	{ id: 74, name: "총무처장", num: "220" },
+	{ id: 75, name: "재무회계과장", num: "223" },
+	{ id: 76, name: "출납", num: "224" },
+	{ id: 77, name: "등록/결산", num: "229" },
+	{ id: 78, name: "법인카드출납", num: "368" },
+	{ id: 79, name: "총무인사과장", num: "221" },
+	{ id: 80, name: "사회보험", num: "222" },
+	{ id: 81, name: "구매", num: "370" },
+	{ id: 82, name: "우편", num: "135" },
+	{ id: 83, name: "시설관리과장", num: "393" },
+	{ id: 84, name: "관리행정/비품", num: "119" },
+	{ id: 85, name: "전기/소방안전", num: "226" },
+	{ id: 86, name: "전기/통신", num: "171" },
+	{ id: 87, name: "대관/음향", num: "172" },
+	{ id: 88, name: "설비/수도/냉난방", num: "225" },
+	{ id: 89, name: "총장수행/주차", num: "113" },
+	{ id: 90, name: "교육기자재실", num: "116" },
+	{ id: 91, name: "대학원장", num: "824" },
+	{ id: 92, name: "신학전문대학원장", num: "710" },
+	{ id: 93, name: "신학대학원장", num: "701" },
+	{ id: 94, name: "사회복지대학원장", num: "716" },
+	{ id: 95, name: "상담대학원장", num: "815" },
+	{ id: 96, name: "설교대학원장", num: "816" },
+	{ id: 97, name: "교회성장대학원장", num: "708" },
+	{ id: 98, name: "교학과장", num: "260" },
+	{ id: 99, name: "교과과정/수업", num: "267" },
+	{ id: 100, name: "장학/논문", num: "266" },
+	{ id: 101, name: "입학/채플", num: "264" },
+	{ id: 102, name: "학적/시험", num: "262" },
+	{ id: 103, name: "대학원안내", num: "265" },
+	{ id: 104, name: "목회현장훈련센터", num: "294" },
+	{ id: 105, name: "목회현장훈련센터", num: "295" },
+	{ id: 106, name: "목회현장훈련센터", num: "296" },
+	{ id: 107, name: "도서관장", num: "508" },
+	{ id: 108, name: "사서과장", num: "247" },
+	{ id: 109, name: "수서", num: "245" },
+	{ id: 110, name: "대출", num: "250" },
+	{ id: 111, name: "편목", num: "254" },
+	{ id: 112, name: "매체제작실", num: "252" },
+	{ id: 113, name: "참고열람실", num: "251" },
+	{ id: 114, name: "참고열람실", num: "253" },
+	{ id: 115, name: "음악도서실", num: "249" },
+	{ id: 116, name: "교육혁신원", num: "436" },
+	{ id: 117, name: "교육혁신원", num: "437" },
+	{ id: 118, name: "교육혁신원", num: "438" },
+	{ id: 119, name: "교수학습개발센터", num: "150" },
+	{ id: 120, name: "교수학습개발센터", num: "390" },
+	{ id: 121, name: "교수학습개발센터", num: "391" },
+	{ id: 122, name: "학습기자재대여", num: "392" },
+	{ id: 123, name: "미래인재개발센터", num: "562" },
+	{ id: 124, name: "미래인재개발센터", num: "540" },
+	{ id: 125, name: "취업지원관", num: "664" },
+	{ id: 126, name: "창업지원센터", num: "563" },
+	{ id: 127, name: "학생상담센터", num: "380" },
+	{ id: 128, name: "학생상담센터", num: "399" },
+	{ id: 129, name: "상담안내", num: "397" },
+	{ id: 130, name: "상담안내", num: "398" },
+	{ id: 131, name: "국제교류원", num: "110" },
+	{ id: 132, name: "국제교류원", num: "394" },
+	{ id: 133, name: "한국어학원", num: "120" },
+	{ id: 134, name: "산학협력단", num: "305" },
+	{ id: 135, name: "창의융합센터", num: "487" },
+	{ id: 136, name: "한국카운슬링센터", num: "270" },
+	{ id: 137, name: "지역사회봉사센터", num: "349" },
+	{ id: 138, name: "지역목회지원센터", num: "350" },
+	{ id: 139, name: "지역목회지원센터", num: "351" },
+	{ id: 140, name: "지역인문학센터", num: "521" },
+	{ id: 141, name: "지역인문학센터", num: "522" },
+	{ id: 142, name: "평생교육원장", num: "180" },
+	{ id: 143, name: "교학과", num: "137" },
+	{ id: 144, name: "일반과정", num: "236" },
+	{ id: 145, name: "학점은행제", num: "237" },
+	{ id: 146, name: "글로벌사중복음연구소", num: "313" },
+	{ id: 147, name: "기독교교육연구소", num: "327" },
+	{ id: 148, name: "기독교신학연구소", num: "325" },
+	{ id: 149, name: "사회복지정보자원연구소", num: "386" },
+	{ id: 150, name: "영유아발달연구소", num: "326" },
+	{ id: 151, name: "웨슬리신학연구소", num: "280" },
+	{ id: 152, name: "전도전략연구소", num: "381" },
+	{ id: 153, name: "한국기독교통일연구소", num: "329" },
+	{ id: 154, name: "현대기독교역사연구소", num: "602" },
+	{ id: 155, name: "총학생회", num: "338" },
+	{ id: 156, name: "동아리연합회", num: "348" },
+	{ id: 157, name: "IT융합소프트웨어학생회", num: "297" },
+	{ id: 158, name: "신학과학생회", num: "342" },
+	{ id: 159, name: "사회복지학과학생회", num: "339" },
+	{ id: 160, name: "보육학과학생회", num: "337" },
+	{ id: 161, name: "관광경영학과학생회", num: "474" },
+	{ id: 162, name: "영어과학생회", num: "344" },
+	{ id: 163, name: "중국어과학생회", num: "273" },
+	{ id: 164, name: "일본어과학생회", num: "472" },
+	{ id: 165, name: "기독교교육과학생회", num: "341" },
+	{ id: 166, name: "유아교육과학생회", num: "318" },
+	{ id: 167, name: "교회음악과학생회", num: "340" },
+	{ id: 168, name: "실용음악과학생회", num: "475" },
+	{ id: 169, name: "대학원원우회", num: "334" },
+	{ id: 170, name: "신학전문대학원원우회", num: "389" },
+	{ id: 171, name: "신학대학원원우회", num: "335" },
+	{ id: 172, name: "사회복지대학원원우회", num: "323" },
+	{ id: 173, name: "상담대학원원우회", num: "336" },
+	{ id: 174, name: "설교대학원원우회", num: "324" },
+	{ id: 175, name: "학보사", num: "396" },
+	{ id: 176, name: "방송국", num: "332" },
+	{ id: 177, name: "예비군대대본부", num: "304" },
+	{ id: 178, name: "예비군대대장", num: "219" },
+	{ id: 179, name: "양호실", num: "320" },
+	{ id: 180, name: "식당", num: "321" },
+	{ id: 181, name: "매점", num: "322" },
+	{ id: 182, name: "체력단련실", num: "580" },
+	{ id: 183, name: "카페드림", num: "340-0120" },
+	{ id: 184, name: "크리스마스자몽", num: "-" },
+	{ id: 185, name: "소사본종합사회복지관", num: "349-3100" },
+	{ id: 186, name: "소사본종합사회복지관", num: "349-3102" },
+	{ id: 187, name: "소사자활센터", num: "349-2353" },
+	{ id: 188, name: "대학어린이집", num: "347-6979" },
+	{ id: 189, name: "신중동 중2마을어린이집", num: "655-7637" },
+	{ id: 190, name: "복사골문화센터어린이집", num: "325-4413" },
+	{ id: 191, name: "부천육아종합지원센터", num: "322-8686" },
+	{ id: 192, name: "보육교사교육원", num: "387" },
+	{ id: 193, name: "보육교사교육원", num: "395" },
+	{ id: 194, name: "우석장학재단", num: "341-6256" },
+	{ id: 195, name: "이남열장학재단", num: "177" },
+	{ id: 196, name: "총동문회", num: "725" },
+	{ id: 197, name: "목회신학연구원", num: "388" },
+	{ id: 198, name: "명예총장실", num: "300" },
+	{ id: 199, name: "회의실-본관", num: "131" },
+	{ id: 200, name: "소회의실-본관", num: "276" },
+	{ id: 201, name: "강사대기실-본관", num: "401" },
+	{ id: 202, name: "강사대기실-성인집", num: "352" },
+	{ id: 203, name: "직원휴게실-본관", num: "133" },
+	{ id: 204, name: "방송실-존토마스홀", num: "128" },
+	{ id: 205, name: "방송실-대강당", num: "124" },
+	{ id: 206, name: "보안실-정문", num: "111" },
+	{ id: 207, name: "보안실-정문", num: "112" },
+	{ id: 208, name: "보안실-백주년기념관", num: "115" },
+	{ id: 209, name: "보안실-주차게이트", num: "141" },
+	// 교수님 내선 1
+	{ id: 210, name: "강금연", num: "478" },
+	{ id: 211, name: "강병오", num: "710" },
+	{ id: 212, name: "강성국", num: "549" },
+	{ id: 213, name: "강수정", num: "310" },
+	{ id: 214, name: "고미영", num: "559" },
+	{ id: 215, name: "고영자", num: "723" },
+	{ id: 216, name: "구경선", num: "805" },
+	{ id: 217, name: "구기송", num: "589" },
+	{ id: 218, name: "김경미", num: "552" },
+	{ id: 219, name: "김문성", num: "439" },
+	{ id: 220, name: "김상원", num: "551" },
+	{ id: 221, name: "김선희", num: "384" },
+	{ id: 222, name: "김상이", num: "282" },
+	{ id: 223, name: "김성원", num: "751" },
+	{ id: 224, name: "김순환", num: "803" },
+	{ id: 225, name: "김영신", num: "556" },
+	{ id: 226, name: "김영인", num: "585" },
+	{ id: 227, name: "김은하", num: "553" },
+	{ id: 228, name: "김은현", num: "727" },
+	{ id: 229, name: "김정인", num: "566" },
+	{ id: 230, name: "김종균", num: "355" },
+	{ id: 231, name: "김종상", num: "477" },
+	{ id: 232, name: "김준용", num: "584" },
+	{ id: 233, name: "김지성", num: "565" },
+	{ id: 234, name: "김진경", num: "809" },
+	{ id: 235, name: "김형락", num: "591" },
+	{ id: 236, name: "류연규", num: "717" },
+	{ id: 237, name: "류완형", num: "374" },
+	{ id: 238, name: "문병구", num: "713" },
+	{ id: 239, name: "박경순", num: "811" },
+	{ id: 240, name: "박기섭", num: "481" },
+	{ id: 241, name: "박삼경", num: "703" },
+	{ id: 242, name: "박상만", num: "443" },
+	{ id: 243, name: "박선영", num: "827" },
+	{ id: 244, name: "박영식", num: "804" },
+	{ id: 245, name: "박찬우", num: "567" },
+	{ id: 246, name: "박창훈", num: "808" },
+	{ id: 247, name: "박향숙", num: "365" },
+	{ id: 248, name: "백명진", num: "415" },
+	{ id: 249, name: "백선희", num: "821" },
+	{ id: 250, name: "서은주", num: "311" },
+	{ id: 251, name: "선우진", num: "724" },
+	{ id: 252, name: "소형근", num: "704" },
+	{ id: 253, name: "손정위", num: "813" },
+	{ id: 254, name: "송규운", num: "824" },
+	{ id: 255, name: "송기현", num: "353" },
+	{ id: 256, name: "송영주", num: "583" },
+	{ id: 257, name: "송윤진", num: "268" },
+	{ id: 258, name: "신승범", num: "706" },
+	{ id: 259, name: "안동현", num: "598" },
+	{ id: 260, name: "양정식", num: "428" },
+	{ id: 261, name: "양준석", num: "714" },
+	{ id: 262, name: "오성욱", num: "555" },
+	{ id: 263, name: "오성현", num: "825" },
+	{ id: 264, name: "오현석", num: "595" },
+	{ id: 265, name: "옥태순", num: "479" },
+	// 교수님 내선 2
+	{ id: 266, name: "왕영희", num: "476" },
+	{ id: 267, name: "원신애", num: "373" },
+	{ id: 268, name: "유재덕", num: "705" },
+	{ id: 269, name: "윤은순", num: "382" },
+	{ id: 270, name: "윤철원", num: "816" },
+	{ id: 272, name: "이길용", num: "429" },
+	{ id: 273, name: "이대주", num: "814" },
+	{ id: 274, name: "이민영", num: "707" },
+	{ id: 275, name: "이봉재", num: "716" },
+	{ id: 276, name: "이부영", num: "568" },
+	{ id: 277, name: "이용호", num: "820" },
+	{ id: 278, name: "이원배", num: "592" },
+	{ id: 279, name: "이은미", num: "819" },
+	{ id: 280, name: "이은진", num: "291" },
+	{ id: 281, name: "이재섭", num: "596" },
+	{ id: 282, name: "이형주", num: "440(814)" },
+	{ id: 283, name: "이희용", num: "729" },
+	{ id: 284, name: "이희철", num: "711" },
+	{ id: 285, name: "임영택", num: "728" },
+	{ id: 286, name: "임용훈", num: "289" },
+	{ id: 287, name: "장금현", num: "452" },
+	{ id: 288, name: "정계현", num: "238" },
+	{ id: 289, name: "정병식", num: "720" },
+	{ id: 290, name: "정인교", num: "827" },
+	{ id: 291, name: "정재웅", num: "379" },
+	{ id: 292, name: "조기연", num: "701" },
+	{ id: 293, name: "조기주", num: "240" },
+	{ id: 294, name: "조무정", num: "593" },
+	{ id: 295, name: "조성호", num: "718" },
+	{ id: 296, name: "조성희", num: "569" },
+	{ id: 297, name: "조의행", num: "558" },
+	{ id: 298, name: "조현숙", num: "815" },
+	{ id: 299, name: "조현정", num: "578" },
+	{ id: 300, name: "최동규", num: "708" },
+	{ id: 301, name: "최석조", num: "288" },
+	{ id: 302, name: "최성수", num: "309" },
+	{ id: 303, name: "최인식", num: "727" },
+	{ id: 304, name: "최중기", num: "241" },
+	{ id: 305, name: "최지원", num: "371" },
+	{ id: 306, name: "최현종", num: "586" },
+	{ id: 307, name: "최형근", num: "715" },
+	{ id: 308, name: "태수진", num: "709" },
+	{ id: 309, name: "하도균", num: "818" },
+	{ id: 310, name: "한경숙", num: "726" },
+	{ id: 311, name: "한수정", num: "812" },
+	{ id: 312, name: "한영희", num: "376" },
+	{ id: 313, name: "함춘호", num: "564" },
+	{ id: 314, name: "허강성", num: "587" },
+	{ id: 315, name: "허선영", num: "480" },
+	{ id: 316, name: "현정환", num: "822" },
+	{ id: 317, name: "홍성혁", num: "712" },
+	{ id: 318, name: "황덕형", num: "807" },
+	{ id: 319, name: "황신애", num: "810" },
+	{ id: 320, name: "황옥경", num: "806" },
+	{ id: 321, name: "황헌영", num: "430" },
+	{ id: 3, name: "하세가와아끼꼬", num: "726" },
+	{ id: 3, name: "Grace Hur", num: "554" },
+	{ id: 3, name: "Harris", num: "561" }
+        ];
+
+        // 검색 로직 구현
+        function performSearch(query) {
+            query = query.toLowerCase(); // 입력값을 소문자로 변환
+            const results = data.filter(item =>
+                item.name.toLowerCase().includes(query) ||
+                item.num.includes(query) // 전화번호로도 검색 가능
+            );
+
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = ''; // 기존 결과 초기화
+
+            if (results.length === 0) {
+                const noResultItem = document.createElement('li');
+                noResultItem.textContent = '검색 결과가 없습니다';
+                noResultItem.classList.add('no-results');
+                resultsContainer.appendChild(noResultItem);
+            } else {
+                results.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.name} ( 내선: ${item.num} )`;
+                    resultsContainer.appendChild(listItem);
+                });
+            }
+
+            // 결과 컨테이너 높이 조정
+            adjustResultHeight(results.length);
+        }
+
+        // 결과 높이 조정 함수
+        function adjustResultHeight(itemCount) {
+            const resultsContainer = document.getElementById('results');
+            const itemHeight = 50; // 각 항목의 예상 높이(px)
+            const maxVisibleItems = 5; // 최대 표시 가능한 항목 수
+            const visibleItems = Math.min(itemCount, maxVisibleItems); // 실제 보여줄 항목 수
+            resultsContainer.style.maxHeight = `${visibleItems * itemHeight}px`;
+        }
+
+        // 실시간 검색 이벤트
+        document.getElementById('searchBox').addEventListener('input', function () {
+            const query = this.value;
+            performSearch(query);
+        });
+
+        // 페이지 로드 시 초기 상태
+        adjustResultHeight(0);
+    </script>
+</body>
+</html>
